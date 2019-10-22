@@ -6,32 +6,28 @@ import java.util.Scanner;
 public class WordBin {
     private ArrayList<String> blackList;
 
-    public WordBin(){
-
+    public WordBin() {
+        blackList = new ArrayList<>();
     }
 
-    public void addWord(String word){
-        if(notInList(word)){
+    public void addWord(String word) {
+        if (!blackList.contains(word)) {
             blackList.add(word);
         }
     }
 
-    private boolean notInList(String newWord) {
-        for (String word:blackList) {
-            if(word.equals(newWord)){
-                return false;
-            }
-        }return true;
-    }
-
-    public void addFromFile(String filename){
+    public void addFromFile(String filename) {
         String text = readFileAsString(filename);
-        String [] words = text.split(",");
-        for (String word:words) {
-            if(notInList(word)){
+        String[] words = text.split(",");
+        for (String word : words) {
+            if (!blackList.contains(word)) {
                 blackList.add(word);
             }
         }
+    }
+
+    public ArrayList<String> getBlackList() {
+        return blackList;
     }
 
     public static String readFileAsString(String filename) {
@@ -42,7 +38,7 @@ public class WordBin {
             scanner = new Scanner(new FileInputStream(filename), "UTF-8");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                output.append(line.trim()+"\n");
+                output.append(line.trim() + "\n");
             }
 
             scanner.close();
