@@ -10,6 +10,18 @@ public class WordBin {
         blackList = new ArrayList<>();
     }
 
+    public boolean checkSentence (String sentence) {
+        if (sentence.contains("")) {
+            //TODO: get dataset with determining phrases
+        }
+        for (String word : blackList) {
+            if (sentence.contains(word)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void addWord(String word) {
         if (!blackList.contains(word)) {
             blackList.add(word);
