@@ -5,22 +5,30 @@ import java.util.Scanner;
 
 public class WordBin {
     private ArrayList<String> blackList;
+    private ArrayList<String> determiningPhrases;
 
     public WordBin() {
         blackList = new ArrayList<>();
+        determiningPhrases = new ArrayList<>();
     }
 
-    public void checkSentence (String sentence) {
-//        boolean directedAt = false;
-//        if (sentence.contains("")) {
-//            //TODO: get dataset with determining phrases
-//            directedAt = true;
-//        }
-        for (String word : blackList) {
-            if (sentence.contains(word)) { //and if directed at someone
-                System.out.println("Sentence is discriminatory because of word: "+word);
+    public boolean checkSentence (String sentence) {
+        boolean referringToSomeone = false;
+        boolean hasDiscriminatoryWord = false;
+
+        for (String word : determiningPhrases) {
+            if (sentence.contains(word)) {
+                referringToSomeone = true;
             }
         }
+
+        for (String word : blackList) {
+            if (sentence.contains(word)) {
+                hasDiscriminatoryWord = true;
+            }
+        }
+
+        return referringToSomeone && hasDiscriminatoryWord;
     }
 
     public void addWord(String word) {
@@ -29,14 +37,26 @@ public class WordBin {
         }
     }
 
-    public void addFromFile(String filename) {
-        String text = readFileAsString(filename);
+    public ArrayList<String> getDeterminingPhrases() {
+        return determiningPhrases;
+    }
+
+    public void addFromFiles(String blacklistWords, String determiningPhrasesWords) {
+        String text = readFileAsString(blacklistWords);
         String[] words = text.split(",");
         for (String word : words) {
             if (!blackList.contains(word)) {
                 blackList.add(word);
             }
         }
+        String text2 = readFileAsString(determiningPhrasesWords);
+        String[] words2 = text.split(",");
+        for (String word : words2) {
+            if (!determiningPhrases.contains(word)) {
+                determiningPhrases.add(word);
+            }
+        }
+
     }
 
     public ArrayList<String> getBlackList() {
