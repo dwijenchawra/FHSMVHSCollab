@@ -4,8 +4,8 @@ public class WordBinTester {
 
         wordBin.addFromFile("data/discrimWords1.csv");
         wordBin.addWord("idiot");
-        System.out.println(wordBin.getBlackList());
-        System.out.println(wordBin.checkSentence("you are stupid"));
+        //System.out.println(wordBin.getBlackList());
+        wordBin.checkSentence("you are stupid loser");
 
 
     }

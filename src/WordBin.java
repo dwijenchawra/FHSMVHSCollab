@@ -10,16 +10,17 @@ public class WordBin {
         blackList = new ArrayList<>();
     }
 
-    public boolean checkSentence (String sentence) {
-        if (sentence.contains("")) {
-            //TODO: get dataset with determining phrases
-        }
+    public void checkSentence (String sentence) {
+//        boolean directedAt = false;
+//        if (sentence.contains("")) {
+//            //TODO: get dataset with determining phrases
+//            directedAt = true;
+//        }
         for (String word : blackList) {
-            if (sentence.contains(word)) {
-                return true;
+            if (sentence.contains(word)) { //and if directed at someone
+                System.out.println("Sentence is discriminatory because of word: "+word);
             }
         }
-        return false;
     }
 
     public void addWord(String word) {
