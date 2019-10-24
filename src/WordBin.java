@@ -5,21 +5,30 @@ import java.util.Scanner;
 
 public class WordBin {
     private ArrayList<String> blackList;
+    private ArrayList<String> determiningPhrases;
 
     public WordBin() {
         blackList = new ArrayList<>();
+        determiningPhrases = new ArrayList<>();
     }
 
     public boolean checkSentence (String sentence) {
-        if (sentence.contains("")) {
-            //TODO: get dataset with determining phrases
-        }
-        for (String word : blackList) {
+        boolean referringToSomeone = false;
+        boolean hasDiscriminatoryWord = false;
+
+        for (String word : determiningPhrases) {
             if (sentence.contains(word)) {
-                return true;
+                referringToSomeone = true;
             }
         }
-        return false;
+
+        for (String word : blackList) {
+            if (sentence.contains(word)) {
+                hasDiscriminatoryWord = true;
+            }
+        }
+
+        return referringToSomeone && hasDiscriminatoryWord;
     }
 
     public void addWord(String word) {
@@ -28,14 +37,26 @@ public class WordBin {
         }
     }
 
-    public void addFromFile(String filename) {
-        String text = readFileAsString(filename);
+    public ArrayList<String> getDeterminingPhrases() {
+        return determiningPhrases;
+    }
+
+    public void addFromFiles(String blacklistWords, String determiningPhrasesWords) {
+        String text = readFileAsString(blacklistWords);
         String[] words = text.split(",");
         for (String word : words) {
             if (!blackList.contains(word)) {
                 blackList.add(word);
             }
         }
+        String text2 = readFileAsString(determiningPhrasesWords);
+        String[] words2 = text.split(",");
+        for (String word : words2) {
+            if (!determiningPhrases.contains(word)) {
+                determiningPhrases.add(word);
+            }
+        }
+
     }
 
     public ArrayList<String> getBlackList() {
