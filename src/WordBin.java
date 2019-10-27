@@ -1,5 +1,6 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -19,6 +20,7 @@ public class WordBin {
         for (String word : determiningPhrases) {
             if (sentence.contains(word)) {
                 referringToSomeone = true;
+                System.out.println();
             }
         }
 
@@ -68,7 +70,7 @@ public class WordBin {
         StringBuilder output = new StringBuilder();
 
         try {
-            scanner = new Scanner(new FileInputStream(filename), "UTF-8");
+            scanner = new Scanner(new FileInputStream(filename), StandardCharsets.UTF_8);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 output.append(line.trim() + "\n");
