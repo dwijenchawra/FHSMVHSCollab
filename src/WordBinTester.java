@@ -1,3 +1,6 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,7 +23,11 @@ public class WordBinTester {
     }
 
     private static double errorChecker(String filePath) {
-        return 0;
+        ArrayList<String> dicscriminatoryPhrases = new ArrayList<>();
+        //todo add way to get phrases from csv
+        for (String phrase : dicscriminatoryPhrases) {
+
+        }
     }
 
     private static void interactiveMode() {
@@ -45,5 +52,25 @@ public class WordBinTester {
         for (String input : inputs) {
             System.out.println(input);
         }
+    }
+
+    public static String readFileAsString(String filename) {
+        Scanner scanner;
+        StringBuilder output = new StringBuilder();
+
+        try {
+            scanner = new Scanner(new FileInputStream(filename), StandardCharsets.UTF_8);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                output.append(line.trim() + "\n");
+            }
+
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found " + filename);
+        }
+
+        return output.toString();
     }
 }
