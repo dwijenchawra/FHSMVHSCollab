@@ -11,23 +11,39 @@ public class WordBinTester {
 
 
         wordBin.addFromFiles("data/discrimWords1.csv", "data/determining_phrases.csv");
-        wordBin.addWord("idiot");
 
         System.out.println(wordBin.getBlackList());
         System.out.println(wordBin.getDeterminingPhrases());
         System.out.println(wordBin.checkSentence("you are stupid idiot"));
-        errorChecker("");
+        System.out.println(errorChecker("data/test_set.csv"));
         interactiveMode();
 
 
     }
 
     private static double errorChecker(String filePath) {
-        ArrayList<String> dicscriminatoryPhrases = new ArrayList<>();
-        //todo add way to get phrases from csv
+        ArrayList<String> dicscriminatoryPhrases = addFromFiles("data/test_set.csv");
+        double numCorrect = 0;
         for (String phrase : dicscriminatoryPhrases) {
-
+            if (wordBin.checkSentence(phrase.toLowerCase().strip())) {
+                numCorrect++;
+            } else {
+                System.out.println(phrase);
+            }
         }
+        return numCorrect / dicscriminatoryPhrases.size();
+    }
+
+    private static ArrayList<String> addFromFiles(String testCases) {
+        ArrayList<String> output = new ArrayList<>();
+        String text = readFileAsString(testCases);
+        String[] words = text.split(",");
+        for (String word : words) {
+            if (!output.contains(word)) {
+                output.add(word);
+            }
+        }
+        return output;
     }
 
     private static void interactiveMode() {
@@ -35,8 +51,11 @@ public class WordBinTester {
         String sentence = "";
         ArrayList<String> inputs = new ArrayList<>();
         while (!sentence.equals("x")) {
+            if (scanner.hasNext())
+                scanner.nextLine();
             System.out.println("Enter a sentence to say (enter x to exit): ");
             sentence = scanner.nextLine();
+
             if (wordBin.checkSentence(sentence)) {
                 String answer;
                 do {
@@ -47,6 +66,7 @@ public class WordBinTester {
                     }
                 } while (!answer.equals("y") && !answer.equals("n"));
             }
+            inputs.add(sentence);
         }
         System.out.println("\nYOUR CONVERSATION:");
         for (String input : inputs) {
