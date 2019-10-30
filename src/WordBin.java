@@ -20,7 +20,6 @@ public class WordBin {
         for (String word : determiningPhrases) {
             if (sentence.contains(word)) {
                 referringToSomeone = true;
-                System.out.println();
             }
         }
 
